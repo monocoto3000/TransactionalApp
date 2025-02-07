@@ -5,13 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.transactionalapp.src.createProduct.domain.CreateProductUseCase
 import kotlinx.coroutines.launch
 
-open class ProductViewModel(
-    private val createProductUseCase: CreateProductUseCase,
+class ProductViewModel(
+    private val createProductUseCase: CreateProductUseCase
 ) : ViewModel() {
-    fun createProduct(name: String, description: String, price: Int) {
+
+    fun createProduct(name: String, description: String, price: Int, image: String?) {
         viewModelScope.launch {
             try {
-                val response = createProductUseCase.execute(name, description, price)
+                val response = createProductUseCase.execute(name, description, price, image)
                 if (response.isSuccessful) {
                     println("✅ Producto creado: ${response.body()}")
                 } else {
@@ -23,3 +24,5 @@ open class ProductViewModel(
         }
     }
 }
+
+

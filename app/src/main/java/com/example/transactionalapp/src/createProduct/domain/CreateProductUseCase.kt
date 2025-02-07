@@ -5,7 +5,7 @@ import com.example.transactionalapp.src.createProduct.data.repository.ProductRep
 import retrofit2.Response
 
 class CreateProductUseCase(private val repository: ProductRepository) {
-    suspend fun execute(name: String, description: String, price: Int): Response<ProductDTO> {
-        return repository.createProduct(name, description, price)
+    suspend fun execute(name: String, description: String, price: Int, image: String?): Response<ProductDTO> {
+        return repository.createProduct(name, description, price, image)
     }
 }

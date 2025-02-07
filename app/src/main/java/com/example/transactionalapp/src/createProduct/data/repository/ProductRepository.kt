@@ -4,6 +4,6 @@ import com.example.transactionalapp.src.createProduct.data.model.CreateProductRe
 import com.example.transactionalapp.src.createProduct.data.datasource.CreateProductService
 
 class ProductRepository(private val api: CreateProductService) {
-    suspend fun createProduct(name: String, description: String, price: Int) =
-        api.createProduct(CreateProductRequest(name, description, price))
+    suspend fun createProduct(name: String, description: String, price: Int, image: String?) =
+        api.createProduct(CreateProductRequest(name, description, price, image))
 }
