@@ -52,17 +52,17 @@ fun CreateProductUi(viewModel: ProductViewModel, navController: NavController) {
     var price by remember { mutableStateOf("") }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var cameraPermissionGranted by remember { mutableStateOf(false) }
-    var trigger by remember { mutableIntStateOf(0) }
+    var aux by remember { mutableStateOf<Uri?>(null) }
 
     val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         imageUri = uri
     }
 
     val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-        if (!success) {
-            imageUri = null
+        imageUri = if (success) {
+            aux
         } else {
-            trigger ++
+            null
         }
     }
 
@@ -115,8 +115,8 @@ fun CreateProductUi(viewModel: ProductViewModel, navController: NavController) {
         Button(onClick = {
             if (cameraPermissionGranted) {
                 val file = File(context.cacheDir, "photo_${System.currentTimeMillis()}.jpg")
-                imageUri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
-                cameraLauncher.launch(imageUri!!)
+                aux = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+                cameraLauncher.launch(aux!!)
             } else {
                 permissionLauncher.launch(Manifest.permission.CAMERA)
             }

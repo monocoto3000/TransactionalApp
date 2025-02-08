@@ -1,16 +1,9 @@
 package com.example.transactionalapp.src.viewProduct.data.datasource
 
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.transactionalapp.core.RetrofitClient
 
-object RetrofitClientViewProduct {
-    private const val BASE_URL = "http://192.168.0.182:3000"
-
+object ViewProductApi {
     val api: ViewProductService by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ViewProductService::class.java)
+        RetrofitClient.instance.create(ViewProductService::class.java)
     }
 }
